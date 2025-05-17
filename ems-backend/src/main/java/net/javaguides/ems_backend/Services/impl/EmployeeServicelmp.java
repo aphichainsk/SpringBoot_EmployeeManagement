@@ -1,4 +1,8 @@
 package net.javaguides.ems_backend.Services.impl;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +33,18 @@ public class EmployeeServicelmp implements EmployeeService {
             .orElseThrow(() -> new RuntimeException("Employee not found with given id : "+ employeeId));
         return EmployeeMapper.mapToEmployeeDto(employee);
     }
+
+    
+    // Build Get All Employees
+    @Override
+    public List<EmployeeDto> getAllEmployee() {
+        List <Employee> employees = employeeRepository.findAll();
+
+       return employees.stream().map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
+       .collect(Collectors.toList());
+    }
+
+
 
    
 

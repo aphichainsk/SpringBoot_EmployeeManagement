@@ -1,5 +1,7 @@
 package net.javaguides.ems_backend.Controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,5 +47,12 @@ public class EmployeeController {
     @GetMapping("{id}")
     public EmployeeDto getEmployeeById(@PathVariable("id") Long employeeId) {
         return employeeService.getEmployeeById(employeeId);
+    }
+
+    // Build Get All Employees
+    @GetMapping
+    public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
+        List<EmployeeDto> employees = employeeService.getAllEmployee();
+        return new ResponseEntity<>(employees, HttpStatus.OK);
     }
 }
