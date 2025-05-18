@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import lombok.AllArgsConstructor;
 import net.javaguides.ems_backend.DTO.EmployeeDto;
 import net.javaguides.ems_backend.Entities.Employee;
+import net.javaguides.ems_backend.Exception.ResourceNotFoundException;
 import net.javaguides.ems_backend.Mapper.EmployeeMapper;
 import net.javaguides.ems_backend.Repository.EmployeeRepository;
 import net.javaguides.ems_backend.Services.EmployeeService;
@@ -42,6 +43,19 @@ public class EmployeeServicelmp implements EmployeeService {
 
        return employees.stream().map((employee) -> EmployeeMapper.mapToEmployeeDto(employee))
        .collect(Collectors.toList());
+    }
+
+    @Override
+    public EmployeeDto updateEmployee(Long employeeId, EmployeeDto updateEmployee) {
+        // Logic to update an employee
+       Employee employee = employeeRepository.findById(employeeId).orElseThrow(
+        () -> new ResourceNotFoundException("Employee is not exists with id : " + employeeId)
+       );
+
+       employee.setFirstName(updateEmployee.getFirstName());
+       employee.setLastName(updateEmployee.getLastName());
+       employee.setEmail(updateEmployee.getEmail());
+       return null;
     }
 
 
